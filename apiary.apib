@@ -1,0 +1,69 @@
+FORMAT: 1A
+HOST: https://ticketchain-backend.herokuapp.com/api/v1
+
+# TicketChain 2 Prototype v.1
+
+## Backend server address 
+**https://ticketchain-backend.herokuapp.com/api/v1**
+
+## API currently lacks these features
+1) Authentication
+2) Async methods
+3) Pagination
+
+## Basic Info [/api/v1/info]
+
+### Get Basic Info [GET /api/v1/info]
+
+Returns basic info for the project that can be used to inform service clients.
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+                "eth_is_enabled": true,
+                "eth_node": "http://ethnode.chain.cloud:8545",
+                "eth_main_address": "0x0605bf0970025A6DD604f5fE481Cc307E9d5450e",
+                "eth_main_address_link": "https://kovan.etherscan.io/address/0x0605bf0970025A6DD604f5fE481Cc307E9d5450e",
+                "eth_main_account": "0xb9af8aa42c97f5a1f73c6e1a683c4bf6353b83e7",
+                "eth_main_account_link": "https://kovan.etherscan.io/address/0xb9af8aa42c97f5a1f73c6e1a683c4bf6353b83e7",
+                "eth_balance_wei": "123112"
+            }
+
+## Tickets [/api/v1/tickets]
+
+### Is ticket sold? [GET /ticket/{NUM}]
+
+Check if ticket with num {NUM} is sold.
+
++ Parameters
+    + NUM - Ticket number (example: АА123456)
+    
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                sold: true
+            }
+
+
+### Sell a Ticket [POST /ticket/{NUM}/sell]
+
+Write info to smart contract
+
+**Postconditions**: 
+1) Ticket is added to the ledger (status: sold)
+
++ Parameters
+    + NUM - Ticket number (example: АА123456)
+    
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                tx: '0x3626f67b81cd57cd0ba62ad3d385e86f7d22a2757c0832f6b3830381afd3027d',
+                txLink: 'https://kovan.etherscan.io/tx/0x3626f67b81cd57cd0ba62ad3d385e86f7d22a2757c0832f6b3830381afd3027d'
+            }

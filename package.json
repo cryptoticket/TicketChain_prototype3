@@ -1,0 +1,57 @@
+{
+  "name": "ticketchain_prototype2",
+  "version": "0.0.2",
+  "description": "This is a simple prototype #2 for TicketsCloud company",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha --reporter spec -t 10000",
+    "kovan": "env SMART_CONTRACTS_ENABLED=true CONTRACT_ADDRESS=0x4b6AB3DbEF5715B34ae2FD9Cdb2Be88161AB624E ETH_NODE=http://ethnode.chain.cloud:8545 ETH_CREATOR_ADDRESS=0xb9Af8aA42c97f5A1F73C6e1a683c4Bf6353B83E7 node main.js",
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "assert": "^1.4.1",
+    "async": "^2.0.0-rc.3",
+    "bcrypt": "^0.8.5",
+    "bignumber.js": "^3.0.1",
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.15.0",
+    "cluster": "^0.7.7",
+    "connect-busboy": "0.0.2",
+    "console.table": "^0.8.0",
+    "cookie": "^0.2.3",
+    "cookie-parser": "^1.4.1",
+    "encoding": "^0.1.12",
+    "ethereumjs-abi": "^0.6.4",
+    "ethereumjs-testrpc": "^3.0.3",
+    "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
+    "express-paginate": "^0.2.2",
+    "facebook-node-sdk": "^0.2.0",
+    "http": "0.0.0",
+    "iconv": "^2.1.11",
+    "jsonwebtoken": "^5.7.0",
+    "knox": "^0.9.2",
+    "line-by-line": "^0.1.5",
+    "line-reader": "^0.4.0",
+    "method-override": "^2.3.5",
+    "mocka": "0.0.1",
+    "nconf": "^0.8.4",
+    "nodemailer": "^0.7.1",
+    "querystring": "^0.2.0",
+    "restler": "^3.4.0",
+    "sleep": "^5.1.0",
+    "solc": "^0.4.8",
+    "web3": "^0.18.2",
+    "winston": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChainCloud/TicketChain_prototype2.git"
+  },
+  "author": "Kirill Guzenko",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ChainCloud/TicketChain_prototype2/issues"
+  },
+  "homepage": "https://github.com/ChainCloud/TicketChain_prototype2#readme"
+}
