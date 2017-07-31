@@ -1,5 +1,5 @@
-# TicketChain_prototype2
-This is a simple prototype #2 for TicketsCloud company.
+# TicketChain_prototype3
+This is a simple prototype #3 for TicketsCloud company.
 
 ## How to install:
 Run ```npm install```

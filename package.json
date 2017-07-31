@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --reporter spec -t 10000",
     "kovan": "env SMART_CONTRACTS_ENABLED=true CONTRACT_ADDRESS=0x4b6AB3DbEF5715B34ae2FD9Cdb2Be88161AB624E ETH_NODE=http://ethnode.chain.cloud:8545 ETH_CREATOR_ADDRESS=0xb9Af8aA42c97f5A1F73C6e1a683c4Bf6353B83E7 node main.js",
-    "start": "node main.js"
+    "start": "node main.js",
+    "github": "git add -A && git commit -m \"autofix\" && git push origin master"
   },
   "dependencies": {
     "assert": "^1.4.1",
