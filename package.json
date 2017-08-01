@@ -7,7 +7,7 @@
     "test": "env ETH_NODE=http://localhost:8545 mocha --reporter spec -t 10000",
     "kovan": "env ETH_NODE=http://ethnode.chain.cloud:8545 node main.js",
     "kovanDeploy": "env ETH_NODE=http://ethnode.chain.cloud:8545 node deploy.js",
-    "start": "env ETH_NODE=http://ethnode.chain.cloud:8545 node main.js",
+    "start": "node main.js",
     "github": "git add -A && git commit -m \"autofix\" && git push origin master"
   },
   "dependencies": {
