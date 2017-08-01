@@ -2,7 +2,7 @@
   "name": "ticketchain_prototype3",
   "version": "0.0.2",
   "description": "This is a simple prototype #3 for TicketsCloud company",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "test": "env ETH_NODE=http://localhost:8545 mocha --reporter spec -t 10000",
     "kovan": "env ETH_NODE=http://ethnode.chain.cloud:8545 node main.js",
@@ -53,7 +53,7 @@
   "author": "Kirill Guzenko",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/ChainCloud/TicketChain_prototype2/issues"
+    "url": "https://github.com/ChainCloud/TicketChain_prototype3/issues"
   },
-  "homepage": "https://github.com/ChainCloud/TicketChain_prototype2#readme"
+  "homepage": "https://github.com/ChainCloud/TicketChain_prototype3#readme"
 }
