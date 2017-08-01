@@ -4,6 +4,7 @@ var port_num  = 4000;
 var fs        = require('fs');
 var config    = require('./config');
 var BigNumber = require('bignumber.js');
+var bodyParser = require('body-parser');
 
 var creator = '0xb9af8aa42c97f5a1f73c6e1a683c4bf6353b83e7';
 var Web3 = require('web3');
@@ -31,19 +32,23 @@ app.get('/tickets/:id', (req,res,next)=> {
 	});
 });
 
-app.post('/tickets/:id', (req,res,next)=> {
+app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
 	web3.eth.contract(abi).at(contract_address).setTicketData1(
 		req.params.id, 
 		req.body.status,        
-		req.body.serial,        
+		req.body.serial,  
+
 		req.body.number,        
 		req.body.seat_sector,   
-		req.body.seat_row,      
+		req.body.seat_row,    
+
 		req.body.seat_number,   
 		req.body.customer,      
 		req.body.customer_name, 
+
 		req.body.event,  
+
 		{from:creator, gas:4995000},
 		(err,ans)=>{
 			if (err){ return res.sendStatus(401) }
@@ -51,12 +56,15 @@ app.post('/tickets/:id', (req,res,next)=> {
 			web3.eth.contract(abi).at(contract_address).setTicketData2(
 				req.params.id, 
 				req.body.event_title,   
-				req.body.category,      
+				req.body.category,    
+
 				req.body.category_name, 
 				req.body.order,         
 				req.body.price,         
+
 				req.body.price_currency,
 				req.body.updated_at,    
+
 				{from:creator, gas:4995000},
 				(err,ans)=>{
 					if (err){ return res.sendStatus(401) }

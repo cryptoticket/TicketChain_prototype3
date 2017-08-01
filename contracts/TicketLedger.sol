@@ -83,9 +83,11 @@ contract TicketLedger {
           newTicket.status         = status_;
           newTicket.serial         = serial_;
           newTicket.number         = number_;
+
           newTicket.seat_sector    = seat_sector_;
           newTicket.seat_row       = seat_row_;
           newTicket.seat_number    = seat_number_;
+          
           newTicket.customer       = customer_;
           newTicket.customer_name  = customer_name_;
           newTicket.event_record   = event_;
@@ -105,9 +107,11 @@ contract TicketLedger {
           t.event_title    = event_title_;
           t.category       = category_;
           t.category_name  = category_name_;
+
           t.order          = order_;
           t.price          = price_;
           t.price_currency = price_currency_;
+
           t.updated_at     = updated_at_;
         
           tickets[id] = t;
