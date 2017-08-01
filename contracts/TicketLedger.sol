@@ -120,3 +120,20 @@ contract TicketLedger {
      }
 }
  
+
+// status        
+// serial        
+// number        
+// seat_sector   
+// seat_row      
+// seat_number   
+// customer      
+// customer_name 
+// event_record  
+// event_title   
+// category      
+// category_name 
+// order         
+// price         
+// price_currency
+// updated_at    
