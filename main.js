@@ -27,7 +27,24 @@ app.get('/tickets/:id', (req,res,next)=> {
 			for (var key in data2) {
 				data.push(data2[key]);
 			};
-			res.json(data);
+			var out = {}
+			out.status         = data[0]
+			out.serial         = data[1]
+			out.number         = data[2]
+			out.seat_sector    = data[3]
+			out.seat_row       = data[4]
+			out.seat_number    = data[5]
+			out.customer       = data[6]
+			out.customer_name  = data[7]
+			out.event_record   = data[8]
+			out.event_title    = data[9]
+			out.category       = data[10]
+			out.category_name  = data[11]
+			out.order          = data[12]
+			out.price          = data[13]
+			out.price_currency = data[14]
+			out.updated_at     = data[15]
+			res.json(out);
 		});
 	});
 });
