@@ -4,10 +4,10 @@
   "description": "This is a simple prototype #3 for TicketsCloud company",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --reporter spec -t 10000",
-    "kovan": "env SMART_CONTRACTS_ENABLED=true CONTRACT_ADDRESS=0xb710c0e54b3795734ff96bdca1a7bad112b2ce05 ETH_NODE=http://ethnode.chain.cloud:8545 ETH_CREATOR_ADDRESS=0xb9Af8aA42c97f5A1F73C6e1a683c4Bf6353B83E7 node main.js",
-    "kovanDeploy": "env SMART_CONTRACTS_ENABLED=true CONTRACT_ADDRESS=0xb710c0e54b3795734ff96bdca1a7bad112b2ce05 ETH_NODE=http://ethnode.chain.cloud:8545 ETH_CREATOR_ADDRESS=0xb9Af8aA42c97f5A1F73C6e1a683c4Bf6353B83E7 node deploy.js",
-    "start": "node main.js",
+    "test": "env ETH_NODE=http://localhost:8545 mocha --reporter spec -t 10000",
+    "kovan": "env ETH_NODE=http://ethnode.chain.cloud:8545 node main.js",
+    "kovanDeploy": "env ETH_NODE=http://ethnode.chain.cloud:8545 node deploy.js",
+    "start": "env ETH_NODE=http://ethnode.chain.cloud:8545 node main.js",
     "github": "git add -A && git commit -m \"autofix\" && git push origin master"
   },
   "dependencies": {

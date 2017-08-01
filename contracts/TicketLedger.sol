@@ -79,20 +79,21 @@ contract TicketLedger {
           int seat_number_,       string customer_,    string customer_name_, 
           string event_
           ) onlyByCreator returns (bool success){
-          Ticket memory newTicket;
-          newTicket.status         = status_;
-          newTicket.serial         = serial_;
-          newTicket.number         = number_;
-
-          newTicket.seat_sector    = seat_sector_;
-          newTicket.seat_row       = seat_row_;
-          newTicket.seat_number    = seat_number_;
+          Ticket t = tickets[id];
           
-          newTicket.customer       = customer_;
-          newTicket.customer_name  = customer_name_;
-          newTicket.event_record   = event_;
+          t.status         = status_;
+          t.serial         = serial_;
+          t.number         = number_;
 
-          tickets[id] = newTicket;
+          t.seat_sector    = seat_sector_;
+          t.seat_row       = seat_row_;
+          t.seat_number    = seat_number_;
+
+          t.customer       = customer_;
+          t.customer_name  = customer_name_;
+          t.event_record   = event_;
+
+          tickets[id] = t;
           success = true;
           return;
      }
