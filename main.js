@@ -1,6 +1,6 @@
 var express   = require('express');
 var app       = express();
-var port_num  = process.env.PORT;
+var port_num  = process.env.PORT||4000;
 var fs        = require('fs');
 var config    = require('./config');
 var BigNumber = require('bignumber.js');
@@ -51,6 +51,7 @@ app.get('/tickets/:id', (req,res,next)=> {
 
 app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
+	console.log('setTicketData1')
 	web3.eth.contract(abi).at(contract_address).setTicketData1(
 		req.params.id, 
 		req.body.status,        
@@ -67,10 +68,12 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 		req.body.event,  
 
 		{from:creator, gas:4995000},
-		(err,ans)=>{
+		(err,c1)=>{
 			if (err){ return res.sendStatus(401) }
+            console.log('setTicketData2')
 			
 			web3.eth.contract(abi).at(contract_address).setTicketData2(
+
 				req.params.id, 
 				req.body.event_title,   
 				req.body.category,    
@@ -83,13 +86,14 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 				req.body.updated_at,    
 
 				{from:creator, gas:4995000},
-				(err,ans)=>{
+				(err,c2)=>{
 					if (err){ return res.sendStatus(401) }
-					res.sendStatus(200)
-				}
+                    console.log('c2:', c2)
+                    res.json({"transaction_hash":c2})
+                }
 			)
 		}	
 	)
 });
 
-app.get('*?', (req,res,next)=> {return res.sendStatus(400)})
+// app.get('*?', (req,res,next)=> {return res.sendStatus(400)})
