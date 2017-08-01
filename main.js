@@ -17,21 +17,52 @@ console.log(`server is running on port ${port_num}`);
 app.listen(port_num);
 
 app.get('/tickets/:id', (req,res,next)=> {
-	web3.eth.contract(abi).at(contract_address).getTicket(String(req.params.id), (err,ans)=>{
-		if (err){ res.json({err:err})}
-		else res.json(ans);
-	})
+	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
+	web3.eth.contract(abi).at(contract_address).getTicketData1(req.params.id, (err,data1)=>{
+		if (err){ return res.json({err:err})}
+		web3.eth.contract(abi).at(contract_address).getTicketData2(req.params.id, (err,data2)=>{
+			if (err){ return res.json({err:err})}
+			var data = data1;
+			for (var key in data2) {
+				data.push(data2[key]);
+			};
+			res.json(data);
+		});
+	});
 });
 
 app.post('/tickets/:id', (req,res,next)=> {
-	web3.eth.contract(abi).at(contract_address).setTicket(
-		req.params.id, 1, 'ololo', 
-		11, "sect1", 12, 
-		30, "Customer", "Cname", 
+	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
+	web3.eth.contract(abi).at(contract_address).setTicketData1(
+		req.params.id, 
+		1, 
+		'ololo', 
+		11, 
+		"sect1", 
+		12, 
+		30, 
+		"Customer", 
+		"Cname", 
 		"event", 
 		{from:creator, gas:4995000},
 		(err,ans)=>{
-			if (err){ res.sendStatus(401) }
-			else res.sendStatus(200);
-	})
+			if (err){ return res.sendStatus(401) }
+			
+			web3.eth.contract(abi).at(contract_address).setTicketData2(
+				req.params.id, 
+				"event_title_",
+				"category_",
+				"category_name_",
+				"order_",
+				133,
+				"price_currency_",
+				"updated_at_",
+				{from:creator, gas:4995000},
+				(err,ans)=>{
+					if (err){ return res.sendStatus(401) }
+					res.sendStatus(200)
+				}
+			)
+		}	
+	)
 });

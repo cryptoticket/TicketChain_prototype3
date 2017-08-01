@@ -5,6 +5,12 @@ contract TicketLedger {
 
      mapping (string => Ticket) tickets;
 
+     modifier onlyByCreator(){
+          if(msg.sender!=creator)
+               throw;
+          _;
+     }
+
      enum Status {
           Vacant,
           Sold,
@@ -39,6 +45,10 @@ contract TicketLedger {
           creator = msg.sender;
      }
 
+     function changeCreator(address newCreator) onlyByCreator{
+          creator = newCreator;
+     }
+
      function getTicketData1(string id) constant returns (
           int, string, int, 
           string, int, int, 
@@ -68,7 +78,7 @@ contract TicketLedger {
           int number_,            string seat_sector_, int seat_row_, 
           int seat_number_,       string customer_,    string customer_name_, 
           string event_
-          ) returns (bool success){
+          ) onlyByCreator returns (bool success){
           Ticket memory newTicket;
           newTicket.status         = status_;
           newTicket.serial         = serial_;
@@ -89,7 +99,7 @@ contract TicketLedger {
           string id,              string event_title_, string category_, 
           string category_name_,  string order_,       int price_,       
           string price_currency_, string updated_at_
-          ) returns (bool success){
+          ) onlyByCreator returns (bool success){
           Ticket t = tickets[id];
 
           t.event_title    = event_title_;
