@@ -1,6 +1,6 @@
 var express   = require('express');
 var app       = express();
-var port_num  = 4000;
+var port_num  = proccess.env.$port;
 var fs        = require('fs');
 var config    = require('./config');
 var BigNumber = require('bignumber.js');
@@ -91,3 +91,5 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 		}	
 	)
 });
+
+app.get('*?', (req,res,next)=> {return res.sendStatus(400)})
