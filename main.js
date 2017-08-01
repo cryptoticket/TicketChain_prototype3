@@ -1,6 +1,6 @@
 var express   = require('express');
 var app       = express();
-var port_num  = proccess.env.$port;
+var port_num  = process.env.$port||4000;
 var fs        = require('fs');
 var config    = require('./config');
 var BigNumber = require('bignumber.js');
