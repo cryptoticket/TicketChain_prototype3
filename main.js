@@ -41,7 +41,21 @@ const statusToInt = status=>{
     return 0
 }
 
+const getContractStatus =out=>{
+    if ( !(out.name) && !(out.serial) ) return "pending"
+    else return "ok"
+}
 
+const updateMoment =()=>{
+    var d = new Date()
+    var DD   = d.getDate()       //Get the day as a number (1-31)
+    var M    = d.getMonth() +1   //Get the month (0-11)
+    var YYYY = d.getFullYear()   //Get the four digit year (yyyy)
+    var HH   = d.getHours()      //Get the hour (0-23)
+    var MM   = d.getMinutes()    //Get the minutes (0-59)
+    var SS   = d.getSeconds()    //Get the seconds (0-59)
+    return `${YYYY}-${M}-${DD} ${HH}:${MM}:${SS}`
+}
 
 app.get('/tickets/:id', (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
@@ -56,20 +70,21 @@ app.get('/tickets/:id', (req,res,next)=> {
 			var out = {}
 			out.status         = intToStatus(data[0])
 			out.serial         = data[1]
-			out.number         = data[2]
+			out.number         = +data[2]
 			out.seat_sector    = data[3]
 			out.seat_row       = data[4]
 			out.seat_number    = data[5]
 			out.customer       = data[6]
 			out.customer_name  = data[7]
-			out.event_record   = data[8]
+			out.event          = data[8]
 			out.event_title    = data[9]
 			out.category       = data[10]
 			out.category_name  = data[11]
 			out.order          = data[12]
-			out.price          = data[13]
+			out.price          = +data[13]
 			out.price_currency = data[14]
 			out.updated_at     = data[15]
+            out.contract_status = getContractStatus(out)
 			res.json(out);
 		});
 	});
@@ -78,18 +93,6 @@ app.get('/tickets/:id', (req,res,next)=> {
 app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){ return res.send('login error') }
 	console.log('setTicketData1')
-    console.log(
-        maybeString(req.params.id), 
-        maybeNumber(req.body.status),       
-        maybeString(req.body.serial),  
-        maybeNumber(req.body.number),       
-        maybeString(req.body.seat_sector),  
-        maybeNumber(req.body.seat_row),    
-        maybeNumber(req.body.seat_number),  
-        maybeString(req.body.customer),     
-        maybeString(req.body.customer_name),
-        maybeString(req.body.event)
-    )
 	web3.eth.contract(abi).at(contract_address).setTicketData1(
 		maybeString(req.params.id), 
 		statusToInt(req.body.status),        
@@ -109,22 +112,7 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 		(err,c1)=>{
 			if (err){ return res.json(err) }
             console.log('setTicketData2')
-            updated_at = new Date()
 
-            console.log(
-
-                maybeString(req.params.id), 
-                maybeString(req.body.event_title),   
-                maybeString(req.body.category),    
-
-                maybeString(req.body.category_name), 
-                maybeString(req.body.order),         
-                maybeNumber(req.body.price),         
-
-                maybeString(req.body.price_currency),
-                String(updated_at)
-            )
-			
 			web3.eth.contract(abi).at(contract_address).setTicketData2(
 
 				maybeString(req.params.id), 
@@ -136,7 +124,7 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
 				maybeNumber(req.body.price),         
 
 				maybeString(req.body.price_currency),
-				String(updated_at),    
+				updateMoment(),    
 
 				{from:creator, gas:4995000},
 				(err,c2)=>{
