@@ -48,12 +48,20 @@ const getContractStatus =out=>{
 
 const updateMoment =()=>{
     var d = new Date()
-    var DD   = d.getDate()       //Get the day as a number (1-31)
-    var M    = d.getMonth() +1   //Get the month (0-11)
-    var YYYY = d.getFullYear()   //Get the four digit year (yyyy)
-    var HH   = d.getHours()      //Get the hour (0-23)
-    var MM   = d.getMinutes()    //Get the minutes (0-59)
-    var SS   = d.getSeconds()    //Get the seconds (0-59)
+    var DD   = String(d.getDate()    )  //Get the day as a number (1-31)
+    var M    = String(d.getMonth() +1)  //Get the month (0-11)
+    var YYYY = String(d.getFullYear())  //Get the four digit year (yyyy)
+    var HH   = String(d.getHours()   )  //Get the hour (0-23)
+    var MM   = String(d.getMinutes() )  //Get the minutes (0-59)
+    var SS   = String(d.getSeconds() )  //Get the seconds (0-59)
+
+    if (DD.length == 1)   DD   = '0'+DD  
+    if (M.length == 1)    M    = '0'+M   
+    if (YYYY.length == 1) YYYY = '0'+YYYY
+    if (HH.length == 1)   HH   = '0'+HH  
+    if (MM.length == 1)   MM   = '0'+MM  
+    if (SS.length == 1)   SS   = '0'+SS  
+
     return `${YYYY}-${M}-${DD} ${HH}:${MM}:${SS}`
 }
 
