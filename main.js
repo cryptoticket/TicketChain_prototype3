@@ -17,6 +17,16 @@ var contract_address = '0xb62d1e1aa71bb8c808008833c915f7d42f7c4a38';
 console.log(`server is running on port ${port_num}`);
 app.listen(port_num);
 
+const maybeString = variable=>{
+    if (typeof variable == 'undefined') return ''
+    else return variable
+}
+
+const maybeNumber = variable=>{
+    if (typeof variable == 'undefined') return 0
+    else return variable
+}
+
 app.get('/tickets/:id', (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
 	web3.eth.contract(abi).at(contract_address).getTicketData1(req.params.id, (err,data1)=>{
@@ -50,45 +60,71 @@ app.get('/tickets/:id', (req,res,next)=> {
 });
 
 app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
-	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
+	if (req.query.auth_code != '123123123'){ return res.send('login error') }
 	console.log('setTicketData1')
+    console.log(
+        maybeString(req.params.id), 
+        maybeNumber(req.body.status),       
+        maybeString(req.body.serial),  
+        maybeNumber(req.body.number),       
+        maybeString(req.body.seat_sector),  
+        maybeNumber(req.body.seat_row),    
+        maybeNumber(req.body.seat_number),  
+        maybeString(req.body.customer),     
+        maybeString(req.body.customer_name),
+        maybeString(req.body.event)
+    )
 	web3.eth.contract(abi).at(contract_address).setTicketData1(
-		req.params.id, 
-		req.body.status,        
-		req.body.serial,  
+		maybeString(req.params.id), 
+		maybeNumber(req.body.status),        
+		maybeString(req.body.serial),  
 
-		req.body.number,        
-		req.body.seat_sector,   
-		req.body.seat_row,    
+		maybeNumber(req.body.number),        
+		maybeString(req.body.seat_sector),   
+		maybeNumber(req.body.seat_row),    
 
-		req.body.seat_number,   
-		req.body.customer,      
-		req.body.customer_name, 
+		maybeNumber(req.body.seat_number),   
+		maybeString(req.body.customer),      
+		maybeString(req.body.customer_name), 
 
-		req.body.event,  
+		maybeString(req.body.event),  
 
 		{from:creator, gas:4995000},
 		(err,c1)=>{
-			if (err){ return res.sendStatus(401) }
+			if (err){ return res.json(err) }
             console.log('setTicketData2')
+            updated_at = new Date()
+
+            console.log(
+
+                maybeString(req.params.id), 
+                maybeString(req.body.event_title),   
+                maybeString(req.body.category),    
+
+                maybeString(req.body.category_name), 
+                maybeString(req.body.order),         
+                maybeNumber(req.body.price),         
+
+                maybeString(req.body.price_currency),
+                String(updated_at)
+            )
 			
 			web3.eth.contract(abi).at(contract_address).setTicketData2(
 
-				req.params.id, 
-				req.body.event_title,   
-				req.body.category,    
+				maybeString(req.params.id), 
+				maybeString(req.body.event_title),   
+				maybeString(req.body.category),    
 
-				req.body.category_name, 
-				req.body.order,         
-				req.body.price,         
+				maybeString(req.body.category_name), 
+				maybeString(req.body.order),         
+				maybeNumber(req.body.price),         
 
-				req.body.price_currency,
-				req.body.updated_at,    
+				maybeString(req.body.price_currency),
+				String(updated_at),    
 
 				{from:creator, gas:4995000},
 				(err,c2)=>{
-					if (err){ return res.sendStatus(401) }
-                    console.log('c2:', c2)
+					if (err){ res.json(err) }
                     res.json({"transaction_hash":c2})
                 }
 			)
