@@ -27,6 +27,22 @@ const maybeNumber = variable=>{
     else return variable
 }
 
+const intToStatus = status=>{
+    if (status==0) return "vacant"
+    if (status==1) return "sold"
+    if (status==2) return "removed"
+    return "vacant"
+}
+
+const statusToInt = status=>{
+    if (status=="vacant")  return 0
+    if (status=="sold")    return 1
+    if (status=="removed") return 2
+    return 0
+}
+
+
+
 app.get('/tickets/:id', (req,res,next)=> {
 	if (req.query.auth_code != '123123123'){return res.sendStatus(400)}
 	web3.eth.contract(abi).at(contract_address).getTicketData1(req.params.id, (err,data1)=>{
@@ -38,7 +54,7 @@ app.get('/tickets/:id', (req,res,next)=> {
 				data.push(data2[key]);
 			};
 			var out = {}
-			out.status         = data[0]
+			out.status         = intToStatus(data[0])
 			out.serial         = data[1]
 			out.number         = data[2]
 			out.seat_sector    = data[3]
@@ -76,7 +92,7 @@ app.post('/tickets/:id', bodyParser.json(), (req,res,next)=> {
     )
 	web3.eth.contract(abi).at(contract_address).setTicketData1(
 		maybeString(req.params.id), 
-		maybeNumber(req.body.status),        
+		statusToInt(req.body.status),        
 		maybeString(req.body.serial),  
 
 		maybeNumber(req.body.number),        
